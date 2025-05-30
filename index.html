@@ -1,36 +1,33 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Remaining Target</title>
+    <title>Remaining Total</title>
     <style>
       body {
         font-family: Arial, sans-serif;
-        font-size: 20px;
+        font-size: 18px;
         text-align: center;
-        padding-top: 30px;
+        margin-top: 20px;
       }
     </style>
   </head>
   <body>
-    <div id="remaining">Loading...</div>
+    <div id="remaining"></div>
 
     <script>
-      const sheetId = "e/2PACX-1vSVQN-qFgR4gcAbz8m5cPbYegNfTBMuCnPI9Lkmw29X60tAavs243Gwi0GCEwlTi4_MoOtji2cdLAyA"; // Replace this
-      const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&range=D1`;
+      const sheetId = 'e/2PACX-1vSVQN-qFgR4gcAbz8m5cPbYegNfTBMuCnPI9Lkmw29X60tAavs243Gwi0GCEwlTi4_MoOtji2cdLAyA';
+      const cell = 'D1';
+      const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${cell}?key=AIzaSyCGpctKvtkwPGjVDcwnjbniKCO1OsHO7H4`;
 
       fetch(url)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.text();
-        })
+        .then(res => res.json())
         .then(data => {
-          document.getElementById("remaining").innerText = `🎯 Remaining Target: £${data.trim()}`;
+          const value = data.values[0][0];
+          document.getElementById('remaining').innerText = `ðŸŽ¯ Remaining Target: Â£${value}`;
         })
-        .catch(error => {
-          document.getElementById("remaining").innerText = "Error loading value.";
-          console.error("Fetch error:", error);
+        .catch(err => {
+          document.getElementById('remaining').innerText = 'Error loading value.';
+          console.error(err);
         });
     </script>
   </body>
