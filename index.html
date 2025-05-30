@@ -23,7 +23,7 @@
         .then(res => res.json())
         .then(data => {
           const value = data.values[0][0];
-          document.getElementById('remaining').innerText = `🎯 Remaining Target: £${value}`;
+          document.getElementById('remaining').innerText = `ðŸŽ¯ Remaining Target: Â£${value}`;
         })
         .catch(err => {
           document.getElementById('remaining').innerText = 'Error loading value.';
