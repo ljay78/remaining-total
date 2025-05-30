@@ -1,33 +1,36 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Remaining Total</title>
+    <title>Remaining Target</title>
     <style>
       body {
         font-family: Arial, sans-serif;
-        font-size: 18px;
+        font-size: 20px;
         text-align: center;
-        margin-top: 20px;
+        padding-top: 30px;
       }
     </style>
   </head>
   <body>
-    <div id="remaining"></div>
+    <div id="remaining">Loading...</div>
 
     <script>
-      const sheetId = '1Yf-otllu6m907Ntc_jwML6k9Lbw-BYNQFIJppzuBHV0';
-      const cell = 'D1';
-      const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${cell}?key=AIzaSyCGpctKvtkwPGjVDcwnjbniKCO1OsHO7H4`;
+      const sheetId = "2PACX-1vSVQN-qFgR4gcAbz8m5cPbYegNfTBMuCnPI9Lkmw29X60tAavs243Gwi0GCEwlTi4_MoOtji2cdLAyA"; // Replace this
+      const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&range=D1`;
 
       fetch(url)
-        .then(res => res.json())
-        .then(data => {
-          const value = data.values[0][0];
-          document.getElementById('remaining').innerText = `ðŸŽ¯ Remaining Target: Â£${value}`;
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.text();
         })
-        .catch(err => {
-          document.getElementById('remaining').innerText = 'Error loading value.';
-          console.error(err);
+        .then(data => {
+          document.getElementById("remaining").innerText = `🎯 Remaining Target: £${data.trim()}`;
+        })
+        .catch(error => {
+          document.getElementById("remaining").innerText = "Error loading value.";
+          console.error("Fetch error:", error);
         });
     </script>
   </body>
